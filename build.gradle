@@ -1,0 +1,38 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id 'java'
+}
+
+group 'dev.josemc.pixucord'
+version '0.0.1-dev'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    // Minestorm
+    implementation('com.github.Minestom:Minestom:b3d81f2') {
+        exclude group: 'org.tinylog'
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'dev.josemc.pixucord.PixuCord'
+        attributes 'Multi-Release': true
+    }
+}
+
+shadowJar {
+    archiveName("PixuCord-${project.version}.jar")
+    mergeServiceFiles()
+    archiveClassifier.set("")
+}
+
+task testJar(type: Copy) {
+    dependsOn(':clean')
+    from shadowJar
+    into(project.file("../TestServer"))
+}
