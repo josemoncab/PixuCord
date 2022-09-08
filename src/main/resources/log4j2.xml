@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <Properties>
+        <Property name="LOG_PATTERN">%highlightError{[%d{HH:mm:ss}] [%level] - %-C{1}: %minecraftFormatting{%msg}%n%xEx}</Property>
+    </Properties>
+
+    <Appenders>
+        <TerminalConsole name="Console">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+        </TerminalConsole>
+
+        <RollingFile name="fileLogger" fileName="./logs/latest.log"
+                     filePattern="./logs/zarchive-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <!-- disable warnings for external dependency loading -->
+        <Logger name="org.jboss.shrinkwrap.resolver.impl.maven.logging.LogTransferListener" level="error" />
+
+        <Root level="debug">
+            <AppenderRef ref="Console" level="info"/>
+            <AppenderRef ref="fileLogger" level="debug"/>
+        </Root>
+    </Loggers>
+</Configuration>
