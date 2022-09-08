@@ -1,4 +1,4 @@
-package dev.josemc.pixucord.file;
+package dev.josemc.pixucord.files;
 
 public class ServerConfig extends Json {
     public ServerConfig() {

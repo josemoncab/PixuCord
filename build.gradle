@@ -30,6 +30,12 @@ dependencies {
 
     // console colors
     implementation 'net.minecrell:terminalconsoleappender:1.3.0'
+
+    // minimessage
+    implementation 'net.kyori:adventure-text-minimessage:4.11.0'
+
+    // reflections
+    implementation 'org.reflections:reflections:0.10.2'
 }
 
 jar {

@@ -1,4 +1,4 @@
-package dev.josemc.pixucord.file;
+package dev.josemc.pixucord.files;
 
 import com.google.gson.Gson;
 import dev.josemc.pixucord.PixuCord;
