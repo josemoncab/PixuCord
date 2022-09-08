@@ -1,5 +1,6 @@
 package dev.josemc.pixucord;
 
+import dev.josemc.pixucord.file.ServerConfig;
 import dev.josemc.pixucord.terminal.TerminalConsole;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -17,9 +18,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 public class ServerBootstrap {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("Pixucord");
-    private final String[] args;
-    public ServerBootstrap(String[] args) {
-        this.args = args;
+    public ServerBootstrap() {
         init();
     }
 
@@ -28,9 +27,7 @@ public class ServerBootstrap {
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
 
-        // TODO: Server config file
-        // set server port
-        int port = 25565;
+        ServerConfig serverConfig = new ServerConfig();
 
         // disable terminal
         System.setProperty("minestom.terminal.disabled", "false");
@@ -51,16 +48,12 @@ public class ServerBootstrap {
         });
 
         // Set band name
-        MinecraftServer.setBrandName("PixuCord");
+        MinecraftServer.setBrandName(serverConfig.brand());
 
         // offline-mode
-        MojangAuth.init();
+        if (serverConfig.onlineMode())
+            MojangAuth.init();
 
-        // proxy protection
-        /*
-        if (cmd.hasOption(proxySecretOption)) {
-            VelocityProxy.enable(cmd.getOptionValue(proxySecretOption));
-        }*/
 
         // optifine enhancement
         OptifineSupport.enable();
@@ -74,7 +67,7 @@ public class ServerBootstrap {
 
 
         // Start the server on port 25565
-        minecraftServer.start("0.0.0.0", port);
+        minecraftServer.start("0.0.0.0", serverConfig.port());
 
         long diff = System.nanoTime() - initTime;
         LOGGER.info(String.format("\u00A7bServer started in %.2fs.", diff / 1000000000f));
