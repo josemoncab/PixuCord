@@ -5,8 +5,8 @@ import java.util.Map;
 public class ServerConfig extends Json {
     private Map<?,?> json;
     public ServerConfig() {
-        super("server-properties.json", true);
-        json = (Map<?, ?>) getJson();
+        super("server-properties.json");
+        json = (Map<?, ?>) this.read(Map.class);
     }
 
     public int port() {
@@ -21,8 +21,4 @@ public class ServerConfig extends Json {
         return (boolean) json.get("online-mode");
     }
 
-    @Override
-    protected String getName() {
-        return "server-properties";
-    }
 }

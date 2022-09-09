@@ -2,57 +2,71 @@ package dev.josemc.pixucord.files;
 
 import com.google.gson.Gson;
 import dev.josemc.pixucord.PixuCord;
+import dev.josemc.pixucord.data.PlayerData;
 import org.apache.logging.log4j.core.util.FileUtils;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.HashMap;
+
+/*
+* Extraer Json del Jar (lang.json)
+* Crear archivo Json vacio
+* Crear Json con el contenido de una plantilla (playerdata.json)
+*
+* */
 
 public abstract class Json {
     private Gson gson;
-
-    private Object json;
     private Reader reader;
+    // Path del archivo a escribir (fuera del jar)
+    private Path path;
 
-    public Json(String file, boolean fromJar) {
-        this(file, fromJar, HashMap.class);
-    }
-    public Json(String file, boolean fromJar, Class<?> clazz) {
+    /**
+     *
+     * @param file Nombre del archivo a crear
+     * @param internal Nombre del archivo dentro del Jar
+     */
+    public Json(String file, String internal) {
         gson = new Gson();
-        Path path = PixuCord.getBasePath().resolve(file);
+        path = PixuCord.getBasePath().resolve(file);
         try {
             if (!Files.exists(path)) {
-                if (!fromJar) {
+                if (!Files.exists(path.getParent())) Files.createDirectories(path.getParent());
+                if (internal == null) {
                     Files.createFile(path);
                 } else {
-                    Files.write(path, FileUtils.class.getClassLoader().getResourceAsStream(file).readAllBytes(), StandardOpenOption.CREATE);
+                    Files.write(path, FileUtils.class.getClassLoader().getResourceAsStream(internal).readAllBytes(), StandardOpenOption.CREATE);
                 }
             }
-            reader = Files.newBufferedReader(PixuCord.getBasePath().resolve(file));
-            json = gson.fromJson(reader, clazz);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected Reader getReader() {
-        return reader;
-    }
-    protected Object getJson() {
-        return json;
+    public Json(String file) {
+        this(file, file);
     }
 
-    protected void save(Object obj, String path) {
+    public Object read(Class<?> clazz) {
         try {
-            gson.toJson(obj, new FileWriter(path));
+            reader = Files.newBufferedReader(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return gson.fromJson(reader, clazz);
+    }
+
+    public void save(PlayerData data) {
+        try {
+            Writer writer = Files.newBufferedWriter(path);
+            gson.toJson(data, writer);
+            writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-    protected abstract String getName();
 }

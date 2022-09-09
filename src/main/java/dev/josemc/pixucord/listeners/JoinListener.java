@@ -1,6 +1,7 @@
 package dev.josemc.pixucord.listeners;
 
 import dev.josemc.pixucord.cache.PlayerCache;
+import dev.josemc.pixucord.data.PlayerData;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
@@ -18,6 +19,10 @@ public class JoinListener extends EventListener {
             player.setRespawnPoint(new Pos(0,5,0));
 
             PlayerCache.add(player.getUuid());
+            PlayerData data = PlayerCache.getPlayer(player.getUuid());
+            LoggerFactory.getLogger(JoinListener.class).info(String.valueOf(data.isOp()));
+            data.setOp(!data.isOp());
+            PlayerCache.update(player.getUuid(), data);
             LoggerFactory.getLogger(JoinListener.class).info(String.valueOf(PlayerCache.getPlayer(player.getUuid()).isOp()));
         });
     }

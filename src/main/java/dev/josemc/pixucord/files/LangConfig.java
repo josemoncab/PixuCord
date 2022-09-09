@@ -10,16 +10,12 @@ public class LangConfig extends Json {
     private Map<?,?> json;
 
     public LangConfig() {
-        super("lang.json", true);
-        json = (Map<?, ?>) getJson();
+        super("lang.json");
+        json = (Map<?, ?>) this.read(Map.class);
     }
 
     public Component get(String path) {
         return MiniMessage.miniMessage().deserialize((String) json.get(path));
     }
 
-    @Override
-    protected String getName() {
-        return "lang";
-    }
 }
