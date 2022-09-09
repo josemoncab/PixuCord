@@ -6,7 +6,6 @@ import dev.josemc.pixucord.data.PlayerData;
 import java.util.UUID;
 
 public class PlayerFile extends Json {
-
     private PlayerData data;
     private UUID uuid;
 
