@@ -21,6 +21,7 @@ import java.nio.file.Path;
 public class PixuCord {
     private static final Logger LOGGER = LoggerFactory.getLogger("PixuCord");
     private static final Path BASE_PATH = Path.of("");
+    private static final Path PLAYER_DATA_PATH = BASE_PATH.resolve("/playerdata");
     private static LangConfig lang;
     public static void main(String[] args) {
         init();
@@ -49,7 +50,7 @@ public class PixuCord {
         MinecraftServer.getGlobalEventHandler().addListener(PlayerLoginEvent.class, event -> {
             Player player = event.getPlayer();
             event.setSpawningInstance(instance);
-            player.setRespawnPoint(new Pos(0,7,0));
+            player.setRespawnPoint(new Pos(0,6,0));
         });
 
         // Set band name
@@ -77,6 +78,9 @@ public class PixuCord {
 
     public static Path getBasePath() {
         return BASE_PATH;
+    }
+    public static Path getPlayerDataPath() {
+        return PLAYER_DATA_PATH;
     }
 
     public static LangConfig getLang() {
