@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public class PlayerCache {
     private static HashMap<UUID, PlayerFile> playerCache = new HashMap<>();
-
     public static HashMap<UUID, PlayerFile> get() {
         return playerCache;
     }
@@ -32,9 +31,7 @@ public class PlayerCache {
     }
 
     public static void saveAll() {
-        playerCache.forEach((playerUuid, playerFile) -> {
-            playerFile.save();
-        });
+        playerCache.forEach((playerUuid, playerFile) -> playerFile.save());
 
         playerCache.clear();
     }

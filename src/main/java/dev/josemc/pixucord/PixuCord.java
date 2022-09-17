@@ -18,7 +18,6 @@ import java.nio.file.Path;
 public class PixuCord {
     private static final Logger LOGGER = LoggerFactory.getLogger("PixuCord");
     private static final Path BASE_PATH = Path.of("");
-    private static final Path PLAYER_DATA_PATH = BASE_PATH.resolve("./playerdata");
     private static LangConfig lang;
     public static void main(String[] args) {
         init();
@@ -55,24 +54,24 @@ public class PixuCord {
         // Start the server on port 25565
         minecraftServer.start("0.0.0.0", serverConfig.port());
 
-        // enable better terminal
-        new TerminalConsole().start();
+        // Stop server
+        MinecraftServer.getSchedulerManager().buildShutdownTask(PixuCord::onStop);
 
         long diff = System.nanoTime() - initTime;
         LOGGER.info(String.format("\u00A7bServer started in %.2fs.", diff / 1000000000f));
+
+        // enable better terminal
+        new TerminalConsole().start();
     }
 
-    private void onStop() {
+    public static void onStop() {
         PlayerCache.saveAll();
+        MinecraftServer.stopCleanly();
     }
 
     public static Path getBasePath() {
         return BASE_PATH;
     }
-    public static Path getPlayerDataPath() {
-        return PLAYER_DATA_PATH;
-    }
-
     public static LangConfig getLang() {
         return lang;
     }

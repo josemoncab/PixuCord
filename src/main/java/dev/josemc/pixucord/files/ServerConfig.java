@@ -3,9 +3,9 @@ package dev.josemc.pixucord.files;
 import java.util.Map;
 
 public class ServerConfig extends Json {
-    private Map<?,?> json;
+    private final Map<?,?> json;
     public ServerConfig() {
-        super("server-properties.json");
+        super("./config/server-properties.json", "config/server-properties.json");
         json = (Map<?, ?>) this.read(Map.class);
     }
 

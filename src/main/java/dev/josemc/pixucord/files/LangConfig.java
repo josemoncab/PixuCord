@@ -10,7 +10,7 @@ public class LangConfig extends Json {
     private Map<?,?> json;
 
     public LangConfig() {
-        super("lang.json");
+        super("./config/lang.json", "config/lang.json");
         json = (Map<?, ?>) this.read(Map.class);
     }
 
