@@ -1,43 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration>
     <Properties>
-        <Property name="LOG_PATTERN">%highlightError{[%d{HH:mm:ss}] %highlight{[%level]} - %-C{1}: %minecraftFormatting{%msg}%n%xEx}</Property>
-        <Property name="LOG_FILE_PATTERN">[%d{HH:mm:ss}] [%level] - %-C{1}: %msg%n%xEx</Property>
+        <Property name="LOG_PATTERN">%highlightError{[%d{HH:mm:ss}] %highlight{[%level]}: %minecraftFormatting{%msg}%n%xEx}</Property>
+        <Property name="LOG_FILE_PATTERN">[%d{HH:mm:ss}] [%level] [%logger]: %msg%n%xEx</Property>
     </Properties>
 
     <Appenders>
-        <TerminalConsole name="Console">
+        <TerminalConsole name="TerminalConsole">
             <PatternLayout pattern="${LOG_PATTERN}" />
         </TerminalConsole>
 
-        <RollingFile name="fileLogger" fileName="./logs/latest.log"
-                     filePattern="./logs/serverlog-%d{yyyy-MM-dd}-%i.log">
+        <RollingRandomAccessFile name="File" fileName="./logs/latest.log"
+                     filePattern="./logs/%d{yyyy-MM-dd}-%i.log.gz">
             <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
-                <SizeBasedTriggeringPolicy size="10MB" />
             </Policies>
             <DefaultRolloverStrategy max="30"/>
-        </RollingFile>
-
-        <RollingFile name="fileDebugLogger" fileName="./logs/debug/latest.log"
-                     filePattern="./logs/debug/serverlog-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
-            <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
-                <SizeBasedTriggeringPolicy size="10MB" />
-            </Policies>
-            <DefaultRolloverStrategy max="30"/>
-        </RollingFile>
+        </RollingRandomAccessFile>
+        <Async name="Async">
+            <AppenderRef ref="rewrite"/>
+        </Async>
+        <Rewrite name="rewrite">
+            <AppenderRef ref="rewrite2"/>
+        </Rewrite>
+        <Rewrite name="rewrite2">
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="TerminalConsole" level="info"/>
+        </Rewrite>
     </Appenders>
     <Loggers>
-        <!-- disable warnings for external dependency loading -->
-        <Logger name="org.jboss.shrinkwrap.resolver.impl.maven.logging.LogTransferListener" level="error" />
-
-        <Root level="debug">
-            <AppenderRef ref="Console" level="info"/>
-            <AppenderRef ref="fileLogger" level="info" />
-            <AppenderRef ref="fileDebugLogger" level="debug"/>
+       <Root level="info">
+            <AppenderRef ref="Async"/>
         </Root>
     </Loggers>
 </Configuration>
