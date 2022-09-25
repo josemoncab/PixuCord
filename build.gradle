@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     // Minestorm
-    implementation('com.github.Minestom:Minestom:b3d81f2') {
+    implementation('com.github.Minestom:Minestom:18c4648') {
         exclude group: 'org.tinylog'
     }
 
@@ -36,6 +36,9 @@ dependencies {
 
     // reflections
     implementation 'org.reflections:reflections:0.10.2'
+
+    // configurate
+    implementation 'org.spongepowered:configurate-hocon:4.1.2'
 }
 
 jar {

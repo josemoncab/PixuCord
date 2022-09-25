@@ -30,8 +30,10 @@
         </Rewrite>
     </Appenders>
     <Loggers>
-       <Root level="info">
+        <Root level="info">
             <AppenderRef ref="Async"/>
         </Root>
+        <Logger name="org.reflections" level="off" />
     </Loggers>
+
 </Configuration>

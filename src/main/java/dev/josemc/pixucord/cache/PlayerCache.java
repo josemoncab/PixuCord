@@ -1,16 +1,10 @@
 package dev.josemc.pixucord.cache;
 
-import dev.josemc.pixucord.data.PlayerData;
-import dev.josemc.pixucord.files.PlayerFile;
-
-import java.util.HashMap;
-import java.util.UUID;
-
 // TODO: Improve player cache system
 
-public class PlayerCache {
-    private static HashMap<UUID, PlayerFile> playerCache = new HashMap<>();
-    public static HashMap<UUID, PlayerFile> get() {
+public class PlayerCache {/*
+    private static ConcurrentHashMap<UUID, PlayerFile> playerCache = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<UUID, PlayerFile> get() {
         return playerCache;
     }
 
@@ -39,5 +33,5 @@ public class PlayerCache {
     public static void saveAndRemove(UUID uuid) {
         getPlayerFile(uuid).save();
         get().remove(uuid);
-    }
+    }*/
 }

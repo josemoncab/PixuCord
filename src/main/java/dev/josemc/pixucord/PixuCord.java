@@ -1,8 +1,7 @@
 package dev.josemc.pixucord;
 
-import dev.josemc.pixucord.cache.PlayerCache;
-import dev.josemc.pixucord.files.LangConfig;
-import dev.josemc.pixucord.files.ServerConfig;
+import dev.josemc.pixucord.configuration.FileManager;
+import dev.josemc.pixucord.configuration.ServerConfig;
 import dev.josemc.pixucord.managers.CommandLoader;
 import dev.josemc.pixucord.managers.EventLoader;
 import dev.josemc.pixucord.terminal.TerminalConsole;
@@ -18,7 +17,7 @@ import java.nio.file.Path;
 public class PixuCord {
     private static final Logger LOGGER = LoggerFactory.getLogger("PixuCord");
     private static final Path BASE_PATH = Path.of("");
-    private static LangConfig lang;
+    private static FileManager fileManager;
     public static void main(String[] args) {
         init();
     }
@@ -27,8 +26,8 @@ public class PixuCord {
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
 
-        ServerConfig serverConfig = new ServerConfig();
-        lang = new LangConfig();
+        fileManager = new FileManager();
+        fileManager.loadLang();
 
         // disable terminal
         System.setProperty("minestom.terminal.disabled", "false");
@@ -37,10 +36,10 @@ public class PixuCord {
         MinecraftServer minecraftServer = MinecraftServer.init();
 
         // Set band name
-        MinecraftServer.setBrandName(serverConfig.brand());
+        MinecraftServer.setBrandName((String) ServerConfig.BRAND.get());
 
         // offline-mode
-        if (serverConfig.onlineMode())
+        if ((boolean) ServerConfig.ONLINE.get())
             MojangAuth.init();
 
         // optifine enhancement
@@ -51,7 +50,7 @@ public class PixuCord {
         new EventLoader();
 
         // Start the server on port 25565
-        minecraftServer.start("0.0.0.0", serverConfig.port());
+        minecraftServer.start("0.0.0.0", (Integer) ServerConfig.PORT.get());
 
         // Stop server
         MinecraftServer.getSchedulerManager().buildShutdownTask(PixuCord::onStop);
@@ -63,13 +62,13 @@ public class PixuCord {
         new TerminalConsole().start();
     }
     public static void onStop() {
-        PlayerCache.saveAll();
+       // PlayerCache.saveAll();
         MinecraftServer.stopCleanly();
     }
     public static Path getBasePath() {
         return BASE_PATH;
     }
-    public static LangConfig getLang() {
-        return lang;
+    public static FileManager getFileManager() {
+        return fileManager;
     }
 }
