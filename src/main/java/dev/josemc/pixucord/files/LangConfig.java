@@ -1,8 +1,5 @@
 package dev.josemc.pixucord.files;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-
 import java.util.Map;
 
 public class LangConfig extends Json {
@@ -14,8 +11,8 @@ public class LangConfig extends Json {
         json = (Map<?, ?>) this.read(Map.class);
     }
 
-    public Component get(String path) {
-        return MiniMessage.miniMessage().deserialize((String) json.get(path));
+    public String get(String path) {
+        return (String) json.get(path);
     }
 
 }

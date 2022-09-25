@@ -14,10 +14,6 @@ public class StopCommand extends Command {
                         (sender instanceof Player p && p.hasPermission("pixucord.commands.stop"))
         );
 
-        setDefaultExecutor((sender, context) -> stop());
-    }
-
-    private void stop() {
-        PixuCord.onStop();
+        setDefaultExecutor((sender, context) -> PixuCord.onStop());
     }
 }

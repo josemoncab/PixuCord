@@ -22,7 +22,6 @@ public class PixuCord {
     public static void main(String[] args) {
         init();
     }
-
     private static void init() {
         long initTime = System.nanoTime();
         SLF4JBridgeHandler.removeHandlersForRootLogger();
@@ -63,12 +62,10 @@ public class PixuCord {
         // enable better terminal
         new TerminalConsole().start();
     }
-
     public static void onStop() {
         PlayerCache.saveAll();
         MinecraftServer.stopCleanly();
     }
-
     public static Path getBasePath() {
         return BASE_PATH;
     }

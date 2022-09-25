@@ -1,5 +1,6 @@
 {
-  "unknown-command": "<red>Comando desconocido!</red>",
-  "player-join": "",
-  "player-leave": ""
+  "prefix": "<green>PixuCord </green> <gray>>></gray>",
+  "unknown-command": "<prefix> <test/> <red>Comando desconocido!</red>",
+  "player-join": "<yellow><player> ha entrado!</yellow>",
+  "player-leave": "<yellow><player> se ha desconectado!</yellow>"
 }

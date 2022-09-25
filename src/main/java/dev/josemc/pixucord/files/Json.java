@@ -2,7 +2,6 @@ package dev.josemc.pixucord.files;
 
 import com.google.gson.Gson;
 import dev.josemc.pixucord.PixuCord;
-import dev.josemc.pixucord.data.PlayerData;
 import org.apache.logging.log4j.core.util.FileUtils;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ import java.nio.file.StandardOpenOption;
 public abstract class Json {
     private Gson gson;
     private Reader reader;
-    // Path del archivo a escribir (fuera del jar)
     private Path path;
 
     /**
@@ -60,7 +58,7 @@ public abstract class Json {
         return gson.fromJson(reader, clazz);
     }
 
-    public void save(PlayerData data) {
+    public void save(Object data) {
         try {
             Writer writer = Files.newBufferedWriter(path);
             gson.toJson(data, writer);

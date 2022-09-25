@@ -8,7 +8,7 @@ public class PlayerFile extends Json {
     private PlayerData data;
 
     public PlayerFile(UUID uuid) {
-        super("./playerdata/" + uuid.toString() + ".json", "templates/playerdata.json");
+        super("./playerdata/" + uuid.toString() + ".json", "config/templates/playerdata.json");
 
         data = (PlayerData) this.read(PlayerData.class);
     }

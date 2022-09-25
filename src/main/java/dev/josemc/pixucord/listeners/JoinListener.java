@@ -1,6 +1,8 @@
 package dev.josemc.pixucord.listeners;
 
+import dev.josemc.pixucord.PixuCord;
 import dev.josemc.pixucord.cache.PlayerCache;
+import dev.josemc.pixucord.utils.MessageUtils;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
@@ -17,6 +19,10 @@ public class JoinListener extends EventListener {
             player.setRespawnPoint(new Pos(0,5,0));
 
             PlayerCache.add(player.getUuid());
+            MessageUtils.send(player, "PlayerData test:" + PlayerCache.getPlayer(player.getUuid()).getTest());
+            PlayerCache.getPlayer(player.getUuid()).setTest("nuevo!!");
+
+            MessageUtils.sendAll(PixuCord.getLang().get("player-join"));
         });
     }
     // TODO: Test Instance

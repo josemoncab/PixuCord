@@ -1,6 +1,7 @@
 package dev.josemc.pixucord.managers;
 
 import dev.josemc.pixucord.PixuCord;
+import dev.josemc.pixucord.utils.MessageUtils;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandManager;
 import net.minestom.server.command.builder.Command;
@@ -37,7 +38,7 @@ public class CommandLoader {
 
         // Default unknown command handler
         commandManager.setUnknownCommandCallback((sender, command) -> {
-            sender.sendMessage(PixuCord.getLang().get("unknown-command"));
+            MessageUtils.send(sender, PixuCord.getLang().get("unknown-command"));
         });
 
         // Registro de comandos dinamicos

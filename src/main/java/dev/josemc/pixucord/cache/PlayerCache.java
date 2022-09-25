@@ -6,6 +6,8 @@ import dev.josemc.pixucord.files.PlayerFile;
 import java.util.HashMap;
 import java.util.UUID;
 
+// TODO: Improve player cache system
+
 public class PlayerCache {
     private static HashMap<UUID, PlayerFile> playerCache = new HashMap<>();
     public static HashMap<UUID, PlayerFile> get() {
@@ -29,10 +31,13 @@ public class PlayerCache {
     public static void update(UUID uuid, PlayerData data) {
         playerCache.put(uuid, getPlayerFile(uuid).setData(data).save());
     }
-
     public static void saveAll() {
         playerCache.forEach((playerUuid, playerFile) -> playerFile.save());
 
         playerCache.clear();
+    }
+    public static void saveAndRemove(UUID uuid) {
+        getPlayerFile(uuid).save();
+        get().remove(uuid);
     }
 }
