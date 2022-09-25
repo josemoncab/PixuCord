@@ -18,7 +18,7 @@ public class CommandLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandLoader.class);
 
     static {
-        LOGGER.info("Iniciando el registro de comandos...");
+        LOGGER.info("Start command loading...");
         Reflections reflections = new Reflections("dev.josemc.pixucord.commands");
         Set<Class<? extends Command>> commands = reflections.getSubTypesOf(Command.class);
         for (Class<? extends Command> cmd : commands) {
@@ -45,6 +45,6 @@ public class CommandLoader {
             commandManager.register(entry.getValue());
         }
 
-        LOGGER.info("{} comandos registrados!", AVALIBLE_COMMANDS.size());
+        LOGGER.info("{} commands loaded!", AVALIBLE_COMMANDS.size());
     }
 }

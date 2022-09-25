@@ -12,7 +12,7 @@ public class EventLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(EventLoader.class);
 
     public EventLoader() {
-        LOGGER.info("Iniciando el registro de eventos...");
+        LOGGER.info("Start event loading...");
         Reflections reflections = new Reflections("dev.josemc.pixucord.listeners");
         Set<Class<? extends EventListener>> eventListeners = reflections.getSubTypesOf(EventListener.class);
         for (Class<? extends EventListener> el : eventListeners) {
@@ -24,6 +24,6 @@ public class EventLoader {
                 throw new RuntimeException(e);
             }
         }
-        LOGGER.info("{} eventos registrados!", eventListeners.size());
+        LOGGER.info("{} events loaded!", eventListeners.size());
     }
 }
