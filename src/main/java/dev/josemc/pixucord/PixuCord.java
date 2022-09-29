@@ -5,6 +5,7 @@ import dev.josemc.pixucord.configuration.ServerConfig;
 import dev.josemc.pixucord.managers.CommandLoader;
 import dev.josemc.pixucord.managers.EventLoader;
 import dev.josemc.pixucord.terminal.TerminalConsole;
+import dev.josemc.pixucord.world.Worlds;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.extras.optifine.OptifineSupport;
@@ -37,6 +38,9 @@ public class PixuCord {
 
         // Set band name
         MinecraftServer.setBrandName((String) ServerConfig.BRAND.get());
+
+        // Load dimmensions
+        Worlds.setupWorlds();
 
         // offline-mode
         if ((boolean) ServerConfig.ONLINE.get())

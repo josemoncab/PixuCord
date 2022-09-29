@@ -29,6 +29,7 @@
             <AppenderRef ref="TerminalConsole" level="info"/>
         </Rewrite>
     </Appenders>
+
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Async"/>
